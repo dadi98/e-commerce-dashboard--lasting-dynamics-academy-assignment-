@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import PageLayout from './PageLayout';
+import Appbar from "./components/AppBar";
+import Drawer from "./components/Drawer";
+import Header from "./components/Header";
+import Main from "./components/Main";
 import './App.css';
+import { theme } from './constants/customTheme';
+import { ThemeProvider } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline";
+import React from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <PageLayout>
+        <Drawer/>
+        <Appbar/>
+        <Header/>
+        <Main/>
+      </PageLayout>
+    </ThemeProvider>
   );
 }
 

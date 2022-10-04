@@ -1,9 +1,14 @@
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import ListItem, { ListItemProps } from "@mui/material/ListItem";
+import ListItemText, { ListItemTextProps } from "@mui/material/ListItemText";
 interface StyledListItemProps extends ListItemProps {
     clicked?: string;
     text?: string;
+    open?: boolean;
   }
+interface StyledListItemTextProps extends ListItemTextProps {
+    open?: boolean;
+}
   
 
 const StyledListItem = styled(ListItem)<StyledListItemProps>(({clicked, text, theme}) => ({
@@ -16,5 +21,10 @@ const StyledListItem = styled(ListItem)<StyledListItemProps>(({clicked, text, th
         })
 }))
 
-export { StyledListItem }
+const StyledListItemText = styled(ListItemText)<StyledListItemTextProps>(({ open }) => ({
+    opacity: open ? 1 : 0,
+    paddingLeft: '16px'
+}))
+
+export { StyledListItem, StyledListItemText }
 

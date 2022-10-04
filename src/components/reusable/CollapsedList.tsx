@@ -10,42 +10,53 @@ import { StyledListItem } from "../styled/listItem";
 import Typography from "@mui/material/Typography";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import { DrawerCollapsedList } from "../styled/list";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { GlobalContext } from "../../App";
 
 type props = {
     text: string,
-    clicked: string,
-    onClick: ( text: string ) => void
 }
 
-function CollapsedList({text, clicked, onClick}: props): JSX.Element {
+function CollapsedList({text}: props): JSX.Element {
+
+    const { clicked, onClick } = useContext(GlobalContext);
 
     const menu =[...(text==='Catalogue' ? catalogueMenu : marketingMenu)]
+
+    const navigate = useNavigate();
  
     return (
-        <MuiList sx={{py: '6px', bgcolor: '#E9F8FE'}}>
+        <DrawerCollapsedList>
             {
-                menu.map(item => (
-                    <StyledListItem sx={{height: '36px'}} key={text} clicked={clicked} text={item} disableGutters>
-                        <ListItemButton disableGutters 
+                menu.map((item, index) => (
+                    <StyledListItem 
+                        sx={{height: '36px'}} 
+                        key={index} 
+                        clicked={clicked} 
+                        text={item} 
+                        disableGutters
+                    >
+                        <ListItemButton 
+                            disableGutters 
                             sx={{height: "36px"}}
-                            onClick={() => {onClick(item);
-                                   
-                                    }}>
+                            onClick={() => {
+                                onClick(item);
+                                navigate(`/${text}/${item.split(' ').join('-')}`)
+                            }}
+                        >
                             <ListItemText primary={
-                                <Typography variant="h5">
+                                <Typography variant="h5" ml='56px'>
                                     {item}
                                 </Typography>
-                                }
-                                sx={{
-                                    //opacity: open ? 1 : 0,
-                                    ml: '56px'
-                                }}
+                                } 
                             />
                         </ListItemButton>
                     </StyledListItem>
                 )) 
             }
-        </MuiList>
+        </DrawerCollapsedList>
   );
 }
 

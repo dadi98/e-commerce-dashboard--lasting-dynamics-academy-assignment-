@@ -12,6 +12,7 @@ import { url } from "inspector";
 
 type props = {
     news: {
+        id: string,
         category: string,
         img: string,
         title: string,
@@ -27,7 +28,7 @@ function NewsCard({news}: props): JSX.Element {
             <Box
                 sx={{ 
                         backgroundImage: `url(${news.img})`,
-                        backgroundSize: 'cover' 
+                        backgroundSize: '100% 100%' ,
                     }}
                 width="100px"
                 height="100px"

@@ -6,7 +6,7 @@ import ExternalLink from "./reusable/ExternalLink";
 function Header(): JSX.Element {
     return ( 
         <>
-            <Typography variant='h1' sx={{flexGrow: 1,}}>
+            <Typography variant='h1' flexGrow={1}>
                 Welcome Mario!
             </Typography>
             <ExternalLink text="app.vetrinalive.it/fenoh-store" link="#" variant="h3"/>

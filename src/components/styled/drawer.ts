@@ -54,7 +54,11 @@ const Drawer = styled(MuiDrawer, {
   } : {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme)
-  }
-)}));
+  }),
+  "& ::-webkit-scrollbar": {
+    display: 'none'
+    }
+    
+}));
 
 export { Drawer, DrawerHeader}

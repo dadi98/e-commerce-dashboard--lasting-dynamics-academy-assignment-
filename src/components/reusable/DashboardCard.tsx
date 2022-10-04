@@ -1,4 +1,4 @@
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
@@ -7,6 +7,9 @@ import Link from "@mui/material/Link";
 import ExternalLink from "./ExternalLink";
 import { styled, useTheme } from "@mui/material/styles";
 import TimeInterval from "./TimeInterval";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useContext } from "react";
+import { GlobalContext } from "../../App";
 
 type props = {
     title: string,
@@ -14,7 +17,7 @@ type props = {
     children?: React.ReactNode
 }
 
-const StyledLink = styled(Link)(({ theme }) => ({
+/*const StyledLink = styled(Link)(({ theme }) => ({
     transition: theme.transitions.create(["all"], {
       duration: theme.transitions.duration.standard,
       easing: theme.transitions.easing.sharp
@@ -22,12 +25,28 @@ const StyledLink = styled(Link)(({ theme }) => ({
     "&:hover": {
       marginRight: "9px"
     }
-  }));
+  }));*/
+
+const redirects = (title: string) => {
+    if(title==='Configure your shop') return '/View-your-shop';
+    if(title==='Extensions Marketplace') return '/Extensions';
+    if(title==='Customer support') return '/Customer-Support';
+    return '/Dashboard'
+}
   
 
 function DashboardCard({title, link, children}: props): JSX.Element {
     
+    const { onClick } = useContext(GlobalContext);
+
     const theme = useTheme()
+
+    const handleClick = () => {
+        onClick(
+            redirects(title).split('/').filter(a => a!=='')
+                            .pop()?.split('-').join(' ') || 'Dashboard'
+                )
+    }   
 
     return (
         <StyledPaper elevation={1} title={title}>
@@ -68,19 +87,27 @@ function DashboardCard({title, link, children}: props): JSX.Element {
                         color: 'primary.light', 
                         gap:'12px'
                         }} >
-                    <StyledLink href="#" underline="none"
-                        color={title!=='logo' ? 'inherit' : 'success.main'} 
-                        sx={{}}>
+                    <Link component={RouterLink} underline="none" to={redirects(title)}
+                        sx={{
+                            transition: theme.transitions.create(["all"], {
+                            duration: theme.transitions.duration.standard,
+                            easing: theme.transitions.easing.sharp
+                        }),
+                        "&:hover": {
+                            marginRight: "9px"
+                        }}}
+                        onClick={handleClick}
+                        color={title!=='logo' ? 'inherit' : 'success.main'}
+                    >
                         <Typography variant="caption" lineHeight="20px" display="flex" sx={{textDecorationLine: 'underline'}} >
                             {link}
                         </Typography>
-                    </StyledLink>
+                    </Link>
                     {title!=="Orders" &&
                     <Box
                         component="img"
                         src={`/images/dashboard/arrow-right${title==='logo' ? "-green" : ""}.svg`}
-                        sx={{
-                        }}
+                        
                     />
                     }
                 </Box>

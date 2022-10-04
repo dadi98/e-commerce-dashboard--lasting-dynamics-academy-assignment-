@@ -19,12 +19,12 @@ export const menu = [
 
 export const marketingMenu = [
     "Discount codes",
-    "Exit intent",
+    "Exit Intent",
     "Checkout Features",
     "Post-purchase conversion",
     "Cart abandonment",
     "Timer checkout",
-    "Sell on Social",
+    "Sell On Social",
     "Special Offer",
     "Seasonal Offer",
 ]
@@ -38,9 +38,9 @@ export const catalogueMenu = [
 export const paperTitles = [
     "Visitors",
     "Orders",
-    "Configure your shop",
+    "Configure Your Shop",
     "Extensions Marketplace",
-    "Ltest news"
+    "Ltest News"
 ]
 
 export const imageList = [
@@ -61,19 +61,19 @@ export const imageList = [
 export const newsData = [
     {
         category: "E-COMMERCE",
-        img: "/images/dashboard/news/news1.jpg",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Gm4rQLaPIJkP53jHhgq2tNWchXLn3kfXH9KKetYi&s",
         title: "How to configure the DNS to point to your VetrinaLive",
         estimatedReading: "4 min"
     },
     {
         category: "E-COMMERCE",
-        img: "/images/dashboard/news/news2.jpg",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF3d64K2dV1I7uIkfniThPlSKK6l0euoKSBRRy79YW&s",
         title: "How to earn money online: 7 ideas for you",
         estimatedReading: "4 min"
     },
     {
         category: "E-COMMERCE",
-        img: "/images/dashboard/news/news2.jpg",
+        img: "https://media.istockphoto.com/photos/omni-channel-technology-of-online-retail-business-picture-id1204099658?k=20&m=1204099658&s=612x612&w=0&h=s2aYy0NVF06GZtDe8kvWYYpFhSg2vFXaJ4jrJMLLsiA=",
         title: "How to earn money online: 7 ideas for you",
         estimatedReading: "4 min"
     },

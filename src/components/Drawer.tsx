@@ -12,31 +12,24 @@ import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import { useTheme } from "@mui/material/styles";
-
-type props = {
-    open: boolean,
-    handleDrawerAction: () => void
-}
-
-
+import { useTheme, createTheme } from "@mui/material/styles";
+import { DrawerList } from "./styled/list";
+import { SelectItem } from "./styled/box";
+import { ShopSelect } from "./styled/select";
+import { SelectMenuItem } from "./styled/menuItem";
+import { useLocation } from "react-router-dom";
 
 function Sidebar(): JSX.Element {
+                                        
     const [open, setOpen] = React.useState(true);
-    const [clicked, setClicked] = React.useState("Dashboard"); 
-    const theme = useTheme()
-    const onClick = (text: string) => {
-        setClicked(text);
-    }
-
+    
     const handleDrawerAction = () => {
       setOpen(!open);
     };
-    
 
     return (
         <Box>
-            <Drawer variant="permanent" open={open} >
+            <Drawer variant="permanent" open={open}>
                 <DrawerHeader  open={open}>
                     <Box display="flex">
                         {open && 
@@ -47,7 +40,7 @@ function Sidebar(): JSX.Element {
                                 src="/logo.svg"
                             />
                         }
-                        <ButtonBase 
+                        <ButtonBase
                             onClick={handleDrawerAction}
                             sx={{ ml: "auto" }}
                         >
@@ -59,40 +52,32 @@ function Sidebar(): JSX.Element {
                         </ButtonBase >
                     </Box>
                 </DrawerHeader>
-                <MuiList sx={{ padding: 0, marginTop: "15px", }}>
+                <DrawerList>
                     {menu.map((text, index) => (
-                        <DrawerNavItem key={index} text={text} open={open} 
-                                        clicked={clicked} onClick={onClick}/>
+                        <DrawerNavItem key={index} text={text} open={open} />
                     ))}
-                </MuiList>
+                </DrawerList>
                 {open &&
-                    <Box m="59px 24px 24px 16px">
+                    <SelectItem>
                         <Typography variant="h4">
-                                Select your shop
+                            Select your shop
                         </Typography>
-                        
-                        
-                        <Select 
-                            fullWidth 
-                            sx={{
-                                ...theme.typography.h5, mt: '15px', 
-                                color: "primary.dark",
-                            }}
-                            defaultValue={"1"}
-                            onChange={(e: SelectChangeEvent) => alert(e.target.value)}
+                        <ShopSelect 
+                            fullWidth
+                            defaultValue={"0"}
+                            onChange={(e: SelectChangeEvent<unknown>) => alert(e.target.value)}
                         >
                             {shops.map((shop, index) =>
-                                <MenuItem  
+                                <SelectMenuItem  
                                     key={index}
                                     value={index} 
                                     divider={index!==shops.length-1} 
-                                    sx={{...theme.typography.h5, py: "16px"}} 
                                 >
                                     { shop }
-                                </MenuItem>
+                                </SelectMenuItem>
                             )}
-                        </Select>
-                    </Box>
+                        </ShopSelect>
+                    </SelectItem>
                 }
             </Drawer>
         </Box>

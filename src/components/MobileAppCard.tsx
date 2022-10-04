@@ -68,14 +68,17 @@ function MobileAppCard(): JSX.Element {
                     mr="3.21px"
                 />
             </Box>
-            <Box display="flex" gap="24px">
-                <Box 
-                    component="img"
-                    src="/images/dashboard/App Store.svg"/>
-                <Box
-                    component="img"
-                    src="/images/dashboard/Google Play.svg"
-                />
+            <Box width="100%">
+                <Box display="flex" paddingRight="11px" >
+                    <Box 
+                        mr="auto"
+                        component="img"
+                        src="/images/dashboard/App Store.svg"/>
+                    <Box
+                        component="img"
+                        src="/images/dashboard/Google Play.svg"
+                    />
+                </Box>
             </Box>
         </StyledPaper>
     );

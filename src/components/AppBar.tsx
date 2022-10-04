@@ -5,44 +5,41 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Badge from "@mui/material/Badge";
+import { StyledAppBar } from "./styled/appbar";
 
-function Appbar(): JSX.Element {
+type props = {
+    clicked: string
+}
+
+function Appbar({clicked}: props): JSX.Element {
     return ( 
-        <AppBar position="sticky" color='inherit' elevation={0} 
-                sx={{
-                    height: '60px',
-                    display: 'flex',
-                    px: '15px',
-                    justifyContent: 'center',
-                    }}
-                >
-            <Toolbar>
-                <Typography variant="h3" sx={{ flexGrow: 1,}}>
-                    Dashboard
+        <StyledAppBar position="sticky" color='inherit' elevation={0}>
+            <Toolbar disableGutters>
+                <Typography variant="h3" flexGrow={1}>
+                    {clicked}
                 </Typography>
 
-                <Box sx={{ display: 'flex' }}>
+                <Box display='flex' gap="4px">
                     <Box
                         component="img"
                         alt="zap"
                         src="/zap.svg"
-                        sx={{mr: '4px'}}
                     />
                     <Link href="#" underline="none">
                         <Badge badgeContent={2} color="error">
-                            <Typography variant="h4" 
-                                        sx={{
-                                            fontWeight: 400,
-                                            color:'primary.main',
-                                            fontFamily: 'Source Sans Pro'
-                                        }}>
-                                            What's new
+                            <Typography 
+                                variant="h4" 
+                                color={ theme => theme.palette.primary.main }
+                                fontFamily="Source Sans Pro"
+                                fontWeight={400}
+                            >
+                                What's new
                             </Typography>
                         </Badge>
                     </Link>
                 </Box>
             </Toolbar>
-        </AppBar>
+        </StyledAppBar>
         );
 }
 

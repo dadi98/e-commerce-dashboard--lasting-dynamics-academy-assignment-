@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import Box from "@mui/material/Box";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -10,15 +10,18 @@ import Divider from "@mui/material/Divider";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
-import { StyledListItem } from "../styled/listItem";
+import { StyledListItem, StyledListItemText } from "../styled/listItem";
 import CollapsedList from "./CollapsedList";
 import {catalogueMenu, marketingMenu, menu} from "../../constants/constants"
+import { ListItemContent, ListItemRectangle, ListItemRightIcon } from "../styled/box";
+import { ThemeProvider } from "@mui/material/styles";
+import { componentsTheme } from "../../constants/customThemeComponents";
+import { Link, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../App";
 
 type props = {
     text: string,
     open: boolean,
-    clicked: string,
-    onClick: ( text: string ) => void
 }
 type collapsed = {
     [key: string]: boolean, 
@@ -38,78 +41,83 @@ const whenCollapsedItemClicked = (clicked: string) => {
     return clicked;
 }
 
-const whenCollapsedItemClickedRectangle = (clicked: string, text: string) => {
-    if(menu.includes(clicked)) return false;
+const isCollapsedItemClicked = (clicked: string, text: string) => {
+    if(clicked===text) return true;
     if(text==="Catalogue" && catalogueMenu.includes(clicked)) return true;
     if(text==="Marketing" && marketingMenu.includes(clicked)) return true;
     return false;
 }
 
-function DrawerNavItem({text, open, clicked, onClick}: props) {
 
-    const [collapsed, setCollapsed ] = useState<collapsed>({Catalogue: false, Marketing: false});
 
+function DrawerNavItem({text, open}: props) {
+    
+    const { clicked, onClick } = useContext(GlobalContext);
+    
+    const [collapsed, setCollapsed ] = useState<collapsed>({
+        Catalogue: catalogueMenu.includes(clicked) && true, 
+        Marketing: marketingMenu.includes(clicked) && true
+    });
+
+    
+    const navigate = useNavigate();
+
+    const handleNavItemClick = () => {
+        includesString(text) ?
+            setCollapsed(state => ({...state, [text]: !state[text] })) : 
+            onClick(text);
+        !includesString(text) && navigate(`/${text.split(' ').join('-')}`);
+    }
     return ( 
     <>    
-        <StyledListItem key={text}
+        <StyledListItem disableGutters
                         clicked={whenCollapsedItemClicked(clicked)} 
-                        text={text} disableGutters>
+                        text={text} >
+            
             <ListItemButton disableGutters 
                             sx={{height: "32px"}}
-                            onClick={() => {
-                                !includesString(text) && onClick(text);
-                                includesString(text) &&
-                                         setCollapsed(state => ({...state, [text]: !state[text] }))
-                                }}>
-                <Box sx={{
-                        width: '3px',
-                        height: '32px',
-                        backgroundColor: 'primary.light',
-                        borderRadius: '20px',
-                        opacity: clicked===text || whenCollapsedItemClickedRectangle(clicked, text) ? 1 : 0,
-                    }}>|</Box>
-                <Box  sx={{ 
-                        display: "flex", 
-                        width: '248px', 
-                        py: '4px',
-                        ml: open ? '4px' : '0',
-                        pl: open ? '13px' : '23px',
-                        
-                        ...((clicked===text || whenCollapsedItemClickedRectangle(clicked, text)) && {
+                            onClick={handleNavItemClick}>
+                <ListItemRectangle  
+                    sx={{
+                        opacity: isCollapsedItemClicked(clicked, text) ? 1 : 0,
+                    }}
+                />
+                <ListItemContent 
+                    open={open}
+                    sx={{
+                        ...((isCollapsedItemClicked(clicked, text)) && {
                                 backgroundColor: '#F7F7F7',
                         })    
-                        }}>  
+                    }}>  
                     {<Box
                         component="img"
-                        src={`/images/sidebar/${text}${clicked===text || whenCollapsedItemClickedRectangle(clicked, text)? ' clicked' : '' }.svg`}
+                        src={`/images/sidebar/${text}${isCollapsedItemClicked(clicked, text)? ' clicked' : '' }.svg`}
                     />}
-                    <ListItemText primary={
-                        <Typography variant="h5">
-                            {text}
-                        </Typography>
+                    <StyledListItemText 
+                        open={open}
+                        primary={
+                            <Typography variant="h5">
+                                {text}
+                            </Typography>
                         }
-                        sx={{ 
-                            
-                            opacity: open ? 1 : 0,
-                            pl: '16px'
-                        }}
                     />
                     {includesString(text) && 
-                        <Box sx={{color: 'primary.main', mr: '20px'}}>
+                        <ListItemRightIcon>
                             { collapsed[text] ? 
                                 <ExpandLessIcon/> : <ExpandMoreIcon/>
                             }
-                        </Box>
+                        </ListItemRightIcon>
                     }
-                </Box> 
+                </ListItemContent> 
             </ListItemButton>
+            
         </StyledListItem>
-        {text==="Log out" &&
-            <Divider sx={{my: '16px', bgcolor: '#E5E5E5'}}/>
+        {
+            text==="Log out" && <Divider />
         }
         { includesString(text) &&
             <Collapse in={open && collapsed[text]}>
-                <CollapsedList text={text} clicked={clicked} onClick={onClick}/>
+                <CollapsedList text={text}/>
             </Collapse>
         }
     </>    

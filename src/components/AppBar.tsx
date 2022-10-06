@@ -6,16 +6,18 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Badge from "@mui/material/Badge";
 import { StyledAppBar } from "./styled/appbar";
+import {Link as RouterLink} from "react-router-dom"
 
 type props = {
-    clicked: string
+    clicked: string,
+    onClick: (text: string) => void
 }
 
-function Appbar({clicked}: props): JSX.Element {
+function Appbar({clicked, onClick}: props): JSX.Element {
     return ( 
         <StyledAppBar position="sticky" color='inherit' elevation={0}>
             <Toolbar disableGutters>
-                <Typography variant="h3" flexGrow={1}>
+                <Typography variant="h3" component={"h3"} flexGrow={1}>
                     {clicked}
                 </Typography>
 
@@ -25,10 +27,13 @@ function Appbar({clicked}: props): JSX.Element {
                         alt="zap"
                         src="/zap.svg"
                     />
-                    <Link href="#" underline="none">
+                    <Link component={RouterLink} to="/Dashboard" 
+                          onClick={() => onClick('Dashboard')}
+                          underline="none">
                         <Badge badgeContent={2} color="error">
                             <Typography 
                                 variant="h4" 
+                                component={'div'}
                                 color={ theme => theme.palette.primary.main }
                                 fontFamily="Source Sans Pro"
                                 fontWeight={400}

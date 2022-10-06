@@ -12,17 +12,19 @@ type props = {
 
 
 function PageLayout({children}: props): JSX.Element {
-    const [Drawer, Appbar, MainComponent] = children;
+    const [Sidebar, Appbar, MainComponent] = children;
     return ( 
        <Box display="flex" bgcolor="#F8F9FB">
             <Box>
-                {Drawer}
+                {Sidebar}
             </Box>
-            <Box flexGrow={1}>
+            <Box flexGrow={1} minHeight="100vh">
                 <Box>
                     {Appbar}
                 </Box>
-                {MainComponent}
+                <Box>
+                    {MainComponent}
+                </Box>
             </Box>
        </Box>
     );

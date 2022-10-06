@@ -10,22 +10,14 @@ import TimeInterval from "./TimeInterval";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
+import { CardHeader, CardHeaderContent, CardHeaderWrapper, InternalLink } from "../styled/box";
+import { internalLink, InternalLinkText } from "../../styles/dashboard";
 
 type props = {
     title: string,
     link: string,
     children?: React.ReactNode
 }
-
-/*const StyledLink = styled(Link)(({ theme }) => ({
-    transition: theme.transitions.create(["all"], {
-      duration: theme.transitions.duration.standard,
-      easing: theme.transitions.easing.sharp
-    }),
-    "&:hover": {
-      marginRight: "9px"
-    }
-  }));*/
 
 const redirects = (title: string) => {
     if(title==='Configure your shop') return '/View-your-shop';
@@ -34,7 +26,6 @@ const redirects = (title: string) => {
     return '/Dashboard'
 }
   
-
 function DashboardCard({title, link, children}: props): JSX.Element {
     
     const { onClick } = useContext(GlobalContext);
@@ -51,27 +42,33 @@ function DashboardCard({title, link, children}: props): JSX.Element {
     return (
         <StyledPaper elevation={1} title={title}>
             {title!=="logo" ?
-                <Box sx={{ flexGrow: 1, width: '100%',}}>
-                    <Box display="flex" mx={ title==="Latest news" ? '10px' : 0}>
-                        <Box display="flex" flexGrow={1} gap="16px" alignItems="center">
+                <CardHeaderWrapper>
+                    <CardHeader>
+                        <CardHeaderContent>
                             <Box
                                 component="img"
                                 src={`/images/dashboard/${title}.svg`}
                                 height='24px'
-                                width={'24px'}
+                                width='24px'
                             />
                             <Typography variant="h2" color="primary.main">
                                 {title}
                             </Typography>
-                        </Box>
+                        </CardHeaderContent>
                         {title === "Latest news" &&
-                            <ExternalLink text="Visit our blog" link="#" variant="caption" color="primary.light" lineHeight="20px" />
+                            <ExternalLink 
+                                    text="Visit our blog"
+                                    link="#" 
+                                    variant="caption" 
+                                    color="primary.light" 
+                                    lineHeight="20px" />
                         }
-                        {["Visitors", "Orders"].includes(title) &&
-                            <TimeInterval />
+                        {
+                            ["Visitors", "Orders"].includes(title) &&
+                                <TimeInterval />
                         }
-                    </Box> 
-                </Box> : 
+                    </CardHeader> 
+                </CardHeaderWrapper> : 
                 <Box
                     component="img"
                     src="/images/dashboard/trustpilot.svg"
@@ -81,25 +78,16 @@ function DashboardCard({title, link, children}: props): JSX.Element {
                 children
             }
             { !["Latest news", "Customer support"].includes(title) &&
-                <Box sx={{ display:'flex',
-                        alignItems: title==="Orders" ? 'flex-end' : 'center',
-                        height: title==="Orders"? '41px': 'auto',
-                        color: 'primary.light', 
-                        gap:'12px'
-                        }} >
-                    <Link component={RouterLink} underline="none" to={redirects(title)}
-                        sx={{
-                            transition: theme.transitions.create(["all"], {
-                            duration: theme.transitions.duration.standard,
-                            easing: theme.transitions.easing.sharp
-                        }),
-                        "&:hover": {
-                            marginRight: "9px"
-                        }}}
+                <InternalLink title={title}>
+                    <Link 
+                        component={RouterLink} 
+                        underline="none" 
+                        to={redirects(title)}
+                        sx={internalLink}
                         onClick={handleClick}
                         color={title!=='logo' ? 'inherit' : 'success.main'}
                     >
-                        <Typography variant="caption" lineHeight="20px" display="flex" sx={{textDecorationLine: 'underline'}} >
+                        <Typography variant="caption" sx={InternalLinkText} >
                             {link}
                         </Typography>
                     </Link>
@@ -110,7 +98,7 @@ function DashboardCard({title, link, children}: props): JSX.Element {
                         
                     />
                     }
-                </Box>
+                </InternalLink>
             }
 
         </StyledPaper>

@@ -88,7 +88,7 @@ export const theme = createTheme({
       body1: {
         fontFamily: 'Noto Sans HK',
         fontStyle: 'normal',
-        fontWeight: '500',
+        fontWeight: '600',
         fontSize: '42px',
         lineHeight: '61px',  
         letterSpacing: 'normal'    

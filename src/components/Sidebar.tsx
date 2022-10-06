@@ -1,8 +1,5 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import MuiList from "@mui/material/List";
-
-import Divider from "@mui/material/Divider";
 
 import DrawerNavItem from "./reusable/DrawerNavItem";
 import { Drawer, DrawerHeader } from "./styled/drawer";
@@ -17,7 +14,6 @@ import { DrawerList } from "./styled/list";
 import { SelectItem } from "./styled/box";
 import { ShopSelect } from "./styled/select";
 import { SelectMenuItem } from "./styled/menuItem";
-import { useLocation } from "react-router-dom";
 
 function Sidebar(): JSX.Element {
                                         
@@ -33,14 +29,13 @@ function Sidebar(): JSX.Element {
                 <DrawerHeader  open={open}>
                     <Box display="flex">
                         {open && 
-                            <Box
+                            <Box 
                                 component="img"
-                                sx={{}}
                                 alt="logo"
                                 src="/logo.svg"
                             />
                         }
-                        <ButtonBase
+                        <ButtonBase data-testid="sidebar-button"
                             onClick={handleDrawerAction}
                             sx={{ ml: "auto" }}
                         >
@@ -58,7 +53,7 @@ function Sidebar(): JSX.Element {
                     ))}
                 </DrawerList>
                 {open &&
-                    <SelectItem>
+                    <SelectItem data-testid="sidebar-select">
                         <Typography variant="h4">
                             Select your shop
                         </Typography>

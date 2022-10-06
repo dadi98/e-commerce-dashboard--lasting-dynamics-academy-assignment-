@@ -23,7 +23,6 @@ function TimeInterval(): JSX.Element {
  
     return (
         <Box sx={{ display: 'flex', color: '#666666', gap:'8px', alignItems: 'center', }}>
-            
             <Typography variant="h5" lineHeight="18px">
                 This month
             </Typography>

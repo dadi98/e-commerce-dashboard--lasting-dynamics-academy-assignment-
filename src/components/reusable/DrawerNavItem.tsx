@@ -18,6 +18,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import { componentsTheme } from "../../constants/customThemeComponents";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../App";
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
+import { numberAvatar } from "../../styles/dashboard";
 
 type props = {
     text: string,
@@ -53,6 +56,7 @@ const isCollapsedItemClicked = (clicked: string, text: string) => {
 function DrawerNavItem({text, open}: props) {
     
     const { clicked, onClick } = useContext(GlobalContext);
+
     
     const [collapsed, setCollapsed ] = useState<collapsed>({
         Catalogue: catalogueMenu.includes(clicked) && true, 
@@ -72,12 +76,15 @@ function DrawerNavItem({text, open}: props) {
     <>    
         <StyledListItem disableGutters
                         clicked={whenCollapsedItemClicked(clicked)} 
-                        text={text} >
+                        text={text} 
+                        data-testid={"nav-list-item"}>
             
             <ListItemButton disableGutters 
                             sx={{height: "32px"}}
-                            onClick={handleNavItemClick}>
+                            onClick={handleNavItemClick}
+                            data-testid="nav-item">
                 <ListItemRectangle  
+                    data-testid={"rectangle"}
                     sx={{
                         opacity: isCollapsedItemClicked(clicked, text) ? 1 : 0,
                     }}
@@ -88,7 +95,8 @@ function DrawerNavItem({text, open}: props) {
                         ...((isCollapsedItemClicked(clicked, text)) && {
                                 backgroundColor: '#F7F7F7',
                         })    
-                    }}>  
+                    }}
+                    data-testid={"list-item-content"}>  
                     {<Box
                         component="img"
                         src={`/images/sidebar/${text}${isCollapsedItemClicked(clicked, text)? ' clicked' : '' }.svg`}
@@ -101,12 +109,19 @@ function DrawerNavItem({text, open}: props) {
                             </Typography>
                         }
                     />
-                    {includesString(text) && 
-                        <ListItemRightIcon>
-                            { collapsed[text] ? 
-                                <ExpandLessIcon/> : <ExpandMoreIcon/>
-                            }
-                        </ListItemRightIcon>
+                    {   
+                        includesString(text) && 
+                            <ListItemRightIcon>
+                                { collapsed[text] ? 
+                                    <ExpandLessIcon/> : <ExpandMoreIcon/>
+                                }
+                            </ListItemRightIcon>
+                    }
+                    {
+                        text==='Orders' &&
+                            <Avatar sx={numberAvatar}>
+                                14
+                            </Avatar>
                     }
                 </ListItemContent> 
             </ListItemButton>

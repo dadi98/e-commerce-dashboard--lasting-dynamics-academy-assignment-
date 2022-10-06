@@ -9,6 +9,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { url } from "inspector";
+import { CardContentBox, CardImgBox } from "../styled/box";
+
+import { Link as RouterLink} from "react-router-dom"
 
 type props = {
     news: {
@@ -23,27 +26,30 @@ type props = {
 function NewsCard({news}: props): JSX.Element {
  
     return (
-        <Grid item lg={6} > 
-            <Link href="#" display="flex" underline="none">
-            <Box
-                sx={{ 
-                        backgroundImage: `url(${news.img})`,
-                        backgroundSize: '100% 100%' ,
-                    }}
-                width="100px"
-                height="100px"
-            />
-            <Box sx={{display: 'flex', flexDirection: 'column', gap: '8px', py: '8px',pl: '16px' ,maxWidth:'195px' }}>
-                <Typography variant="h6" color="primary.light">
-                    {news.category}
-                </Typography>
-                <Typography variant="h4" color="primary.main">
-                    {news.title}
-                </Typography>
-                <Typography variant="subtitle1" color="secondary.main"  sx={{textDecorationLine: 'underline'}}>
-                    Estimated reading: {news.estimatedReading}
-                </Typography>
-            </Box>
+        <Grid item lg={6} data-testid={'news-item'}> 
+            <Link 
+                component={RouterLink} 
+                to='/Dashboard'
+                display="flex" 
+                underline="none" 
+                gap='16px'
+            >
+                <CardImgBox newsImg={news.img} />
+                <CardContentBox>
+                    <Typography variant="h6" color="primary.light">
+                        {news.category}
+                    </Typography>
+                    <Typography variant="h4" color="primary.main">
+                        {news.title}
+                    </Typography>
+                    <Typography 
+                        variant="subtitle1" 
+                        color="secondary.main" 
+                        sx={{textDecorationLine: 'underline'}}
+                    >
+                        Estimated reading: {news.estimatedReading}
+                    </Typography>
+                </CardContentBox>
             </Link>
         </Grid>
     );

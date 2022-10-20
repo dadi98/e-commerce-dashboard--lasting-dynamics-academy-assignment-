@@ -82,7 +82,9 @@ const CardContentBox = styled(Box)({
     maxWidth:'195px' 
 })
 
-const CardImgBox = styled(Box)<StyledBoxProps>(({newsImg}) => ({
+const CardImgBox = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "newsImg"
+})<StyledBoxProps>(({newsImg}) => ({
     backgroundImage: `url(${newsImg})`,
     backgroundSize: '100% 100%' ,
     width: "100px",

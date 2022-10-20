@@ -33,24 +33,20 @@ function App() {
   }
 
   return (
-    
-      
-        <GlobalContext.Provider
-          value={{
-            clicked: clicked,
-            onClick: onClick
-          }}
-        >
-          <ThemeProvider theme={{...theme, components: components}}>
-            <PageLayout>
-              <Sidebar />
-              <Appbar clicked={clicked} onClick={onClick}/>
-              <MainComponent />
-            </PageLayout>
-          </ThemeProvider>
-        </GlobalContext.Provider>
-      
-    
+      <GlobalContext.Provider
+        value={{
+          clicked: clicked,
+          onClick: onClick
+        }}
+      >
+        <ThemeProvider theme={{...theme, components: components}}>
+          <PageLayout>
+            <Sidebar />
+            <Appbar clicked={clicked} onClick={onClick}/>
+            <MainComponent />
+          </PageLayout>
+        </ThemeProvider>
+      </GlobalContext.Provider> 
   );
 }
 
